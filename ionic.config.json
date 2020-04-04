@@ -1,0 +1,7 @@
+{
+  "name": "corona_condom",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
