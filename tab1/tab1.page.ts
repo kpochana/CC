@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+/*import { Component } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
-import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ngx';
+//import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ngx';
 import { browser } from 'protractor';
-import { LoginService } from '../services/login.service';
+//import { LoginService } from '../services/login.service';
 
 
 @Component({
@@ -45,7 +45,7 @@ export class Tab1Page {
   getCode(){
     console.log("function running");
     var loginURL:string = this.loginURLp1 + this.userString + this.loginURLp2;
-    let browser = this.iab.create(loginURL, '_blank');
+    //let browser = this.iab.create(loginURL, '_blank');
     this.loginService.loginData.subscribe((data)=>{
       this.returnedState = data[0];
       this.returnedCode = data[1];
@@ -77,3 +77,4 @@ export class Tab1Page {
   }
 
 }
+*/
