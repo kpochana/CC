@@ -1,27 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="Trebuchet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>HOMEPAGE</title>
-</head>
-<body style="
+<style>
+    body {
     background-color: rgb(105, 188, 230);
     margin: 0cm;  
     padding: 0cm;
     list-style: none;
     text-decoration: none;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    ">
-<header style="
-    background-color: aliceblue;
+    }
+    .header {
+    padding: 10px 16px;
+    background-color:aliceblue ;
+    text-align: center;
+    }
+    .content {
+    padding: 16px;
+    text-align: center;
+    }
+    .sticky {
+    position: fixed;
+    top: 0px;
     width: 100%;
-    height: 3cm;
-    display: block;
-    margin: 0cm;  
-    padding: 0cm;
-    ">
-</header>
+    }
+    .sticky + .content {
+    padding-top: 40px;
+    }
+    .footer {
+    width:100%;
+    padding: 10px 16px;
+    position: fixed;
+    bottom: 0px;
+    background-color:aliceblue;
+    color: rgb(105, 188, 230);
+    text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="header" id="TitleHeader">
+    <h1>NAME1</h1>
+</div>
+<div class="content">
+    <h2>***</h2>
+    <h3>&&&&</h3>
+</div>
+
+<script>
+window.onscroll = function() {ScrollFunc()};
+
+var header = document.getElementById("TitleHeader");
+var sticky = header.offsetTop;
+
+function ScrollFunc() {
+    if (window.pageYOffset > sticky) {
+        header.classList.add ("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
+}
+</script>
+
+<div class="footer">
+    <p>copyright*</p>
+</div>
    
 </body>
+</html>
