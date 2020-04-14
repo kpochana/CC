@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Tab 1
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-explore-container name="Tab 1 page"></app-explore-container>
+
+  <ion-item>
+    <ion-label position = "floating">Username</ion-label>
+    <ion-input type = "text" id = "userInputName" [(ngModel)] = "userString"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position = "floating">State</ion-label>
+    <ion-input type = "text" id="state" [(ngModel)] = "state"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position = "floating">Code</ion-label>
+    <ion-input type = "text" id="code" [(ngModel)] = "code"></ion-input>
+  </ion-item>
+
+  <ion-fab horizontal = "left" vertical = "bottom" slot = "fixed">
+    <ion-fab-button (click) = "getCode()">
+      <ion-icon name = "enter-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab horizontal = "center" vertical = "bottom" slot = "fixed">
+    <ion-fab-button (click) = "getToken()">
+      <ion-icon name = "enter-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
