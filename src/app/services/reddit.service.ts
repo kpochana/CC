@@ -15,7 +15,7 @@ export class RedditService {
   state:string = this.device.uuid + "CC";
   appID:string = "dACO3ajsot2Udg";
   redirectURL:string = "http://localhost:8100/redirect";
-  permissions:string = "identity edit";
+  permissions:string = "identity edit read";
   loginURLp1:string = "https://www.reddit.com/api/v1/authorize?"
                 + "client_id=" + this.appID
                 + "&response_type=" + "code"
@@ -25,12 +25,16 @@ export class RedditService {
                 + "&duration=" + "permanent"
                 + "&scope=" + this.permissions;
 
-  //reddit:Snoowrap = new Snoowrap()
-  //public login:BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  reddit:Snoowrap = null;
 
-  private sUpdate:BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private wrapUpdate:BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public postStream:BehaviorSubject<[]> = new BehaviorSubject<[]>([]);
 
-  constructor(private device: Device) { }
+  constructor(private device: Device) { 
+    this.wrapUpdate.subscribe((swrap) =>{
+      this.reddit = swrap;
+    })
+  }
 
   login(state:string, code:string){
     if(state != this.state){
@@ -43,13 +47,19 @@ export class RedditService {
       clientId: this.appID,
       redirectUri: this.redirectURL
     }).then(r=>{
-      this.sUpdate.next(r);
-      //console.log(r);
+      this.wrapUpdate.next(r);
+      console.log(r);
     });
     return true;
   }
 
   generateURL(){
     return this.loginURLp1 + this.state + this.loginURLp2;
+  }
+
+  getPosts(subreddit:string = "CoronaCondom"){
+    this.reddit.getSubreddit(subreddit).getNew().then((data)=>{
+      console.log(data);
+    })
   }
 }
