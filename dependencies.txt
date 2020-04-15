@@ -1,0 +1,4 @@
+Packages that should be installed (via npm or other method):
+-snoowrap
+-inappbrowser
+-device
