@@ -8,6 +8,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ngx';
+import { RedditService } from './services/reddit.service';
+import { Device } from '@ionic-native/device/ngx';
+import { Snoowrap } from 'snoowrap';
+import { NavController } from '@ionic/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +21,10 @@ import { AppComponent } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    InAppBrowser,
+    RedditService,
+    Device
   ],
   bootstrap: [AppComponent]
 })
