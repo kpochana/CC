@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {RedditService} from '../services/reddit.service';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private reddit:RedditService) {}
+
+  goToPost(post:string[]){
+    console.log(post[2]);
+  }
 
 }

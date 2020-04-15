@@ -1,9 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -13,5 +9,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-list>
+    <ion-item lines="none" *ngFor="let post of this.reddit.savedPosts">
+      <ion-card button="true" (click)= "goToPost(post)" >
+        <ion-card-header>
+          <ion-card-title>{{post[0]}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>{{post[1]}}</ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

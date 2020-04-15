@@ -11,7 +11,7 @@ var snoowrap = require('snoowrap');
 })
 export class RedditService {
 
-
+  //login stuff
   state:string = this.device.uuid + "CC";
   appID:string = "dACO3ajsot2Udg";
   redirectURL:string = "http://localhost:8100/redirect";
@@ -25,10 +25,14 @@ export class RedditService {
                 + "&duration=" + "permanent"
                 + "&scope=" + this.permissions;
 
-  reddit:Snoowrap = null;
+  //stuff to store in cookies              
+  private reddit:Snoowrap = null;
+  public savedPosts:string[] = [];
 
+  //stream stuff
   private wrapUpdate:BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public postStream:BehaviorSubject<[]> = new BehaviorSubject<[]>([]);
+  public postStream:BehaviorSubject<string[][]> = new BehaviorSubject<string[][]>([]);
+
 
   constructor(private device: Device) { 
     this.wrapUpdate.subscribe((swrap) =>{
@@ -58,8 +62,24 @@ export class RedditService {
   }
 
   getPosts(subreddit:string = "CoronaCondom"){
-    this.reddit.getSubreddit(subreddit).getNew().then((data)=>{
-      console.log(data);
-    })
+    //making sure reddit snoowrap object exists
+    this.wrapUpdate.subscribe((junk)=>{
+      //only get posts once it has been created
+      if(this.reddit != null){
+        //get posts
+        this.reddit.getSubreddit(subreddit).getNew().then((data)=>{
+          console.log(data.length);
+          let toPush:Array<Array<string>> = [];
+          for(let post of data){
+            toPush.push([post.title, post.selftext, post.id]);
+          }
+          this.postStream.next(toPush);
+          this.wrapUpdate.unsubscribe();
+        });
+      }
+    
+    });
+
+    
   }
 }

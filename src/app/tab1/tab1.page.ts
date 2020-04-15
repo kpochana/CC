@@ -8,10 +8,21 @@ import {RedditService} from '../services/reddit.service';
 })
 export class Tab1Page {
 
+  posts:string[][] = [];
+
   constructor(private reddit: RedditService) {}
-  
-  test(){
+
+  ngOnInit(){
     this.reddit.getPosts();
+    this.reddit.postStream.subscribe((posts)=>{
+      this.posts = posts;
+      console.log(posts);
+    });
   }
+
+  goToPost(post:string[]){
+    console.log(post[2]);
+  }
+  
 
 }
