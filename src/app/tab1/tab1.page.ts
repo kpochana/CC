@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {RedditService} from '../services/reddit.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -10,18 +11,20 @@ export class Tab1Page {
 
   posts:string[][] = [];
 
-  constructor(private reddit: RedditService) {}
+  constructor(private reddit: RedditService,
+              private navCtrl: NavController) {}
 
   ngOnInit(){
     this.reddit.getPosts();
-    this.reddit.postStream.subscribe((posts)=>{
+    this.reddit.pageStream.subscribe((posts)=>{
       this.posts = posts;
       console.log(posts);
     });
   }
 
   goToPost(post:string[]){
-    console.log(post[2]);
+    //console.log(post[2]);
+    this.navCtrl.navigateForward('/post/'+post[2]);
   }
   
 

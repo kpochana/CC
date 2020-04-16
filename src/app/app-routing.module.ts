@@ -13,6 +13,14 @@ const routes: Routes = [
   {
     path: 'redirect',
     loadChildren: () => import('./pages/redirect/redirect.module').then( m => m.RedirectPageModule)
+  },
+  {
+    path: 'post',
+    loadChildren: () => import('./pages/post/post.module').then( m => m.PostPageModule)
+  },
+  {
+    path: 'post/:id',
+    loadChildren: () => import('./pages/post/post.module').then( m => m.PostPageModule)
   }
 ];
 @NgModule({

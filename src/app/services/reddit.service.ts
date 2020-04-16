@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import { Device } from '@ionic-native/device/ngx';
-import {Snoowrap} from 'snoowrap';
+//import {Snoowrap} from 'snoowrap';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ngx';
 
 var snoowrap = require('snoowrap');
@@ -26,12 +26,13 @@ export class RedditService {
                 + "&scope=" + this.permissions;
 
   //stuff to store in cookies              
-  private reddit:Snoowrap = null;
+  private reddit = null;
   public savedPosts:string[] = [];
 
   //stream stuff
   private wrapUpdate:BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public postStream:BehaviorSubject<string[][]> = new BehaviorSubject<string[][]>([]);
+  public pageStream:BehaviorSubject<string[][]> = new BehaviorSubject<string[][]>([]);
+  public postStream:BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
 
   constructor(private device: Device) { 
@@ -73,7 +74,7 @@ export class RedditService {
           for(let post of data){
             toPush.push([post.title, post.selftext, post.id]);
           }
-          this.postStream.next(toPush);
+          this.pageStream.next(toPush);
           this.wrapUpdate.unsubscribe();
         });
       }
@@ -81,5 +82,25 @@ export class RedditService {
     });
 
     
+  }
+
+  getPost(postID:string){
+    //making sure reddit snoowrap obj exists
+    this.wrapUpdate.subscribe((junk)=>{
+      //only get posts once obj has been created
+      if(this.reddit != null){
+          this.reddit.getSubmission(postID).then((post)=>{
+            let comments = this.getComments(post.comments);
+          });
+        this.wrapUpdate.unsubscribe();
+      }
+    });
+  }
+
+  getComments(comments/*:Snoowrap.Listing<Snoowrap.Comment>*/){
+    let toReturn = [];
+    for(let comment of comments){
+      
+    }
   }
 }

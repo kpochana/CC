@@ -11,8 +11,9 @@ import { AppComponent } from './app.component';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ngx';
 import { RedditService } from './services/reddit.service';
 import { Device } from '@ionic-native/device/ngx';
-import { Snoowrap } from 'snoowrap';
+//import { Snoowrap } from 'snoowrap';
 import { NavController } from '@ionic/angular';
+import {ActivatedRoute} from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
