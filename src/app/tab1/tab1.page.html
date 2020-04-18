@@ -1,5 +1,15 @@
 <ion-header [translucent]="true">
- 
+
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">Cov-Aid</ion-title>
+      <ion-button slot="primary">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+      <ion-button slot="secondary">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+        <IonSearchbar value={Search} onIonChange={e => setSearchText(e.detail.value!)}></IonSearchbar>
+      </ion-button>
+  </ion-toolbar>
 
 </ion-header>
 
@@ -9,16 +19,23 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
+  <app-explore-container name="Tab 1 page"></app-explore-container>
 
-  <ion-list>
-    <ion-item lines="none" *ngFor="let post of posts">
-      <ion-card button="true" (click)= "goToPost(post)" >
-        <ion-card-header>
-          <ion-card-title>{{post[0]}}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>{{post[1]}}</ion-card-content>
-      </ion-card>
-    </ion-item>
-  </ion-list>
+  <ion-fab horizontal = "center" vertical = "bottom" slot = "fixed">
+    <ion-fab-button (click) = "test()">
+      <ion-icon name = "refresh-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+    <ion-list>
+      <ion-item lines="none" *ngFor="let post of posts">
+        <ion-card button="true" (click)="goToPost(post)">
+          <ion-card-header>
+            <ion-card-title>{{post[0]}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>{{post[1]}}</ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
 
 </ion-content>
