@@ -6,13 +6,17 @@
       Cov-Aid
     </ion-title>
 
-    <ion-button slot="primary">
-      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-button (click)="goTo('profile')">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
 
-    <ion-button slot="secondary">
-      <ion-icon slot="icon-only" name="add-circle"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="goTo('new-post')">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 
   <ion-tab-bar slot="bottom">

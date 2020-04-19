@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-avatar class="ion-margin-start">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG">
+  </ion-avatar>
+  <ion-card-title class="ion-margin-start">{{name}}</ion-card-title>  
+  
+  <ion-item>
+    <ion-label>Select City to Track</ion-label>
+    <ion-select value="Baton Rouge" okText="Okay" cancelText="Dismiss">
+      <ion-select-option value="brown">Baton Rouge</ion-select-option>
+      <ion-select-option value="blonde">Shreveport</ion-select-option>
+      <ion-select-option value="black">New Orleans</ion-select-option>
+      <ion-select-option value="red">Hammond</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>

@@ -14,6 +14,7 @@ import { Device } from '@ionic-native/device/ngx';
 //import { Snoowrap } from 'snoowrap';
 import { NavController } from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
+import {PopoverController} from '@ionic/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,8 @@ import {ActivatedRoute} from '@angular/router';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     InAppBrowser,
     RedditService,
-    Device
+    Device,
+    PopoverController
   ],
   bootstrap: [AppComponent]
 })

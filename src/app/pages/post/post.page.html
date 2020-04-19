@@ -1,9 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>post</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{post[0]}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="popButton">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-grid style="height: 100%; display: flex; flex-flow: column;">
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{post[0]}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>{{post[1]}}</ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style = "flex-grow: 1">
+      <ion-col>
+        <ion-list lines="none" *ngFor="let comment of post[2]">
+          <ion-card button="true">
+            <ion-card-content>{{comment[0]}}</ion-card-content>
+          </ion-card>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-textarea autoGrow="true" placeholder="enter a comment..." [(ngModel)]="userText"></ion-textarea>
+    <ion-buttons slot="end">
+      <ion-button (click)="submitComment()">
+        <ion-icon slot="icon-only" name="send-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

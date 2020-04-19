@@ -21,6 +21,14 @@ const routes: Routes = [
   {
     path: 'post/:id',
     loadChildren: () => import('./pages/post/post.module').then( m => m.PostPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'new-post',
+    loadChildren: () => import('./pages/new-post/new-post.module').then( m => m.NewPostPageModule)
   }
 ];
 @NgModule({

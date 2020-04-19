@@ -22,6 +22,11 @@ export class Tab1Page {
     });
   }
 
+  ngOnDestroy(){
+    console.log("I am running");
+    this.reddit.pageStream.unsubscribe();
+  }
+
   goToPost(post:string[]){
     //console.log(post[2]);
     this.navCtrl.navigateForward('/post/'+post[2]);
