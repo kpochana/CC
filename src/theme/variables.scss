@@ -3,6 +3,10 @@
 
 /** Ionic CSS Variables **/
 :root {
+  /** general app **/
+  --ion-background-color: #ffffff;
+  --ion-font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Arial", sans-serif;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -229,4 +233,8 @@
   ion-title.title-large {
     --color: white;
   }
+}
+
+ion-button {
+  --background: #004dd3;
 }
