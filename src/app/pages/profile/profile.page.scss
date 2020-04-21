@@ -1,6 +1,18 @@
+ion-toolbar {
+    padding-top: 16px;
+}
+
+ion-content {
+    background-color:#8fb8ff;
+    }
+
 ion-avatar  {
     width:100% !important;
     height : 100% !important;
     max-width: 250px !important;  //any size
     max-height: 250px !important; //any size
+    padding-top: 1cm ;
+    align-items: initial; ;;
     }
+
+
