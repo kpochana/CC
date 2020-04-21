@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar class="toolbar.top" color="primary">
+  <ion-toolbar class="toolbar-top" color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/main/tabs"></ion-back-button>
     </ion-buttons>
@@ -7,8 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content.background">
-  <ion-avatar class="ion-justify-content-center">
+<ion-content class="content-background" fullscreen="true">
+  <ion-avatar class="ion-justify-content-center" horizontal="center">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG">
   </ion-avatar>
   <ion-card-title class="ion-text-center">{{name}}</ion-card-title>  
@@ -25,11 +25,9 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-button slot="primary">
-      <ion-icon slot="ion-oinly" name="alert">Contact Us</ion-icon>
+    <ion-button>
+      <ion-icon slot="ion-only" name="alert">Contact Us</ion-icon>
     </ion-button>
-  </ion-toolbar>
 </ion-footer>
 
 

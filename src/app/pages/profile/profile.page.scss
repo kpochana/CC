@@ -1,14 +1,13 @@
-.toolbar.top {
+.toolbar-top {
     --padding-top: 16px;
 }
 
-.content.background {
-    --background-color:#8fb8ff;
+.content-background {
+    --ion-background-color:#8fb8ff;
     }
 
 .ion-text-center {
-    --text-align: center;
-    --padding-top: 0.3cm;
+    --color:black;
 
 }
 
@@ -18,8 +17,7 @@
     --max-width: 250px !important;  //any size
     --max-height: 250px !important; //any size
     --padding-top: 1cm ;
-    --align-items: center;
-    --display: flex;
+    --padding-start: 50%;
     }
 
 
