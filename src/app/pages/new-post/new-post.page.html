@@ -10,12 +10,15 @@
 <ion-content>
 
   <ion-card-subtitle class="ion-margin-start">
-    Enter the items you need, as well as any specifics such as brands, quantities, and such.
-    Users will privately message you if they can deliver your requested items.
-    Payment and delivery methods will all be discussed between requester and deliverer.
+    <p>Please enter the service you are requesting</p>
+    <p>Include any specific such as brands, quantities, etc.</p>
+    <p>Users will privately message you if they can deliver your requests</p>
+    <p>Payment and delivery methods are decided between users. We recommend no-touch methods such as Venmo or CashApp. 
+      Please sanitize all items and stay safe.
+    </p>
   </ion-card-subtitle>
 
-  <ion-item>
+  <ion-item class="ion-item-for-post">
     <ion-label position="stacked">Post Title</ion-label>
     <ion-input type="text" [(ngModel)]="postTitle"></ion-input>
     <ion-label position="stacked">Post Text:</ion-label>
@@ -25,5 +28,5 @@
   <ion-button (click)="submitPost()" expand="block" size="large">
     Create Post
   </ion-button>
-
 </ion-content>
+

@@ -1,6 +1,22 @@
-ion-avatar  {
+.toolbar.top {
+    --padding-top: 16px;
+}
+
+.content.background {
+    --background-color:#8fb8ff;
+    }
+
+.ion-text-center {
+    --text-align: center;
+    --padding-top: 0.3cm;
+
+}
+
+.mAvatar {
     width:100% !important;
     height : 100% !important;
     max-width: 250px !important;  //any size
     max-height: 250px !important; //any size
+    margin:0 auto;
     }
+

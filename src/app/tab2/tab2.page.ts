@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {RedditService} from '../services/reddit.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,15 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  threads:string[]=[];
+  constructor(private reddit:RedditService) {}
 
+  ngOnInit(){
+    this.reddit.messageStream.subscribe((threads)=>{
+      console.log(threads);
+      this.threads = threads;
+    })
+    this.reddit.getInbox();
+  }
 }
+
