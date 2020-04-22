@@ -18,5 +18,19 @@
     max-width: 250px !important;  //any size
     max-height: 250px !important; //any size
     margin:0 auto;
+    padding-top: 1cm;
+    padding-left: 30px;
     }
+
+ion ion-content {
+    --background: #bddcff;
+    --color: #3880ff;
+    --keyboard-offset: 0px;
+    --offset-bottom: 0px;
+    --offset-top: 0px;
+    --padding-bottom: 0px;
+    --padding-end: 0px;
+    --padding-start: 0px;
+    --padding-top: 0px;
+}
 
