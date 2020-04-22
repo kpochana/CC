@@ -15,7 +15,7 @@ export class RedditService {
   state:string = this.device.uuid + "CC";
   appID:string = "dACO3ajsot2Udg";
   redirectURL:string = "http://localhost:8100/redirect";
-  permissions:string = "identity edit read submit";
+  permissions:string = "identity edit read submit flair history privatemessages";
   loginURLp1:string = "https://www.reddit.com/api/v1/authorize?"
                 + "client_id=" + this.appID
                 + "&response_type=" + "code"
@@ -34,9 +34,11 @@ export class RedditService {
   public pageStream:BehaviorSubject<string[][]> = new BehaviorSubject<string[][]>([]);
   public postStream:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public profileStream:BehaviorSubject<any> = new BehaviorSubject<any>("");
+  public messageStream:BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   //other vars
   private subredditName:string = "CoronaCondom";
+  threads = {};
 
   constructor(private device: Device) { 
     this.wrapUpdate.subscribe((swrap) =>{
@@ -147,7 +149,7 @@ export class RedditService {
             console.log("pushing updated name: " + name); 
             this.profileStream.next(name);
             tempSub.unsubscribe();
-          })
+          });
         }
       }
     });
@@ -160,4 +162,57 @@ export class RedditService {
       text: body
     }).then(console.log);
   }
+
+  getInbox(){
+    let toPush:string[] = [];
+    let tempSub = this.wrapUpdate.subscribe((junk)=>{
+      if(this.reddit != null){
+        this.reddit.getInbox({filter: "messages"}).then((messages)=>{
+          toPush = toPush.concat(this.processMessages(messages));
+          this.messageStream.next(toPush);
+          console.log(toPush);
+        });
+        this.reddit.getSentMessages().then((messages)=>{
+          toPush = toPush.concat(this.processMessages(messages, true));
+          this.messageStream.next(toPush);
+          console.log(toPush);
+          tempSub.unsubscribe();
+        });
+        console.log(this.threads);
+      }
+    });
+  }
+
+  processMessages(messages, sending=false){
+    let displayArray:string[] = [];
+    console.log(messages);
+    for(let message of messages){
+      if(message.subject.search(this.subredditName) != -1){
+        if(sending){var key = message.dest;}
+        else{var key = message.author.name;}
+        if(!(key in this.threads)){
+          displayArray.push(key);
+          this.threads[key] = new thread(key);
+        }
+        this.threads[key].addMessage(message);
+        
+      }
+    }
+    console.log(displayArray);
+    return displayArray;
+  }
+   
+}
+
+class thread{
+  author:string="";
+  messages = [];
+  constructor(author:string){
+    this.author = author;
+  }
+
+  addMessage(toAdd){
+    this.messages.push(toAdd);
+  }
+
 }

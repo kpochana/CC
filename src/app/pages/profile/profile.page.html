@@ -7,12 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content-background" fullscreen="true">
-  <ion-avatar class="ion-justify-content-center" horizontal="center">
+<ion-content class="content.background">
+  <ion-avatar class="mAvatar">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG">
   </ion-avatar>
   <ion-card-title class="ion-text-center">{{name}}</ion-card-title>  
-
+  
   <ion-item>
     <ion-label>Select City to Track</ion-label>
     <ion-select value="Baton Rouge" okText="Okay" cancelText="Dismiss">
@@ -25,10 +25,9 @@
 </ion-content>
 
 <ion-footer>
-    <ion-button>
-      <ion-icon slot="ion-only" name="alert">Contact Us</ion-icon>
+  <ion-toolbar color="primary">
+    <ion-button slot="primary">
+      <ion-icon slot="ion-oinly" name="alert">Contact Us</ion-icon>
     </ion-button>
+  </ion-toolbar>
 </ion-footer>
-
-
-
