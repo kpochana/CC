@@ -6,10 +6,10 @@
   --color: #3881ff;
   --min-height: 56px;
   --opacity: 1;
-  --padding-bottom: 4px;
+  --padding-bottom: 16px;
   --padding-end: 4px;
   --padding-start: 4px;
-  --padding-top: 4px;
+  --padding-top: 16px;
 }
 .ion-item {
   --background: #3881ff;
@@ -17,4 +17,12 @@
 
 .ion-header {
   --font-family: 'Source Sans Pro', sans-serif;
+}
+
+.ion-text-center-toolbar {
+  --padding-top: 10px;
+}
+
+.ion-text-center-state-code {
+  --padding-top: 2cm;
 }
