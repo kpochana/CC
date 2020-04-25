@@ -39,7 +39,6 @@ export class RedditService {
   private wrapUpdate:BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public pageStream:BehaviorSubject<string[][]> = new BehaviorSubject<string[][]>([]);
   public postStream:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  public profileStream:BehaviorSubject<any> = new BehaviorSubject<any>("");
   public messageStream:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public threadStream:BehaviorSubject<string[][]> = new BehaviorSubject<string[][]>([]);
   public refreshStream:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -190,6 +189,7 @@ export class RedditService {
               post.comments.then((mComments)=>{
                 let commentsArray = [];
                 for(let comment of mComments){
+                  //console.log(comment);
                   commentsArray.push([comment.body, comment.author.name, comment.id]);
                 }
                 toPush.push(commentsArray);
@@ -244,7 +244,6 @@ export class RedditService {
           this.reddit.getMe().name.then((name)=>{
             console.log("pushing updated name: " + name);
             this.userName = name; 
-            this.profileStream.next(name);
             tempSub.unsubscribe();
           });
         }

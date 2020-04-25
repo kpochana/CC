@@ -9,11 +9,11 @@
 
 <ion-content class="content.background">
   <ion-avatar class="mAvatar">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG">
+    <img src="../../../assets/icon/kula.png">
   </ion-avatar>
-  <ion-card-title class="ion-text-center">{{this.reddit.userName}}</ion-card-title>  
+  <ion-card-title class="ion-text-center">Logged in as:<br>{{this.reddit.userName}}</ion-card-title>  
   
-  <ion-label style="text-align: center;">My City: </ion-label>
+  <ion-card-title style="text-align: center; font-size: 100%; padding-top:1cm;">My City: </ion-card-title>
   <ion-item class="trackcity">
     <ion-label>{{this.reddit.locationString}}</ion-label>
     <ion-select  (ionChange)="updateCity($event)" okText="Select" cancelText="Dismiss">

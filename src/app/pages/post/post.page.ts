@@ -26,6 +26,7 @@ export class PostPage implements OnInit {
     console.log(this.postID);
     this.reddit.getPost(this.postID);
     this.mSub = this.reddit.postStream.subscribe((post)=>{
+      console.log("being updated");
       this.post = post;
       this.saved = this.reddit.savedPosts.includes(this.postID);
     });
@@ -41,7 +42,8 @@ export class PostPage implements OnInit {
 
   submitComment(){
     if(this.userText != ""){
-      this.reddit.submitComment(this.postID, this.userText).then(()=>{
+      this.reddit.submitComment(this.postID, this.userText).then((a)=>{
+        console.log(a);
         setTimeout(()=>{
           console.log("resolving");
         this.reddit.getPost(this.postID);
