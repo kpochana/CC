@@ -2,14 +2,15 @@
     --padding-top: 16px;
 }
 
-.content.background {
-    --background-color:#8fb8ff;
-    }
 
 .ion-text-center {
     --text-align: center;
     --padding-top: 0.3cm;
 
+}
+
+ion-card-title {
+  color: #ffffff;
 }
 
 .mAvatar {
@@ -19,12 +20,15 @@
     max-height: 250px !important; //any size
     margin:0 auto;
     padding-top: 1cm;
-    padding-left: 30px;
+    padding-left: 1cm;
+    padding-right: 1cm;
+    padding-bottom: 1cm
     }
 
-ion ion-content {
-    --background: #bddcff;
-    --color: #3880ff;
+  
+  ion-content {
+    --ion-background-color: #3f3f3f;
+    --color: #ffffff;
     --keyboard-offset: 0px;
     --offset-bottom: 0px;
     --offset-top: 0px;
@@ -32,5 +36,25 @@ ion ion-content {
     --padding-end: 0px;
     --padding-start: 0px;
     --padding-top: 0px;
-}
+  }
+  
+  .trackcity {
+    background-color: #3f3f3f;
+    color:#ffffff;
+    min-width: 90% !important;
+    max-width: 90% !important;
+    margin:0 auto;
+    padding-top: 1cm;
+    border-color: #3f3f3f;
+    border-style: none;
+  }
+
+
+  .logout_button{
+    min-width: 100% !important;
+    max-width: 100% !important;
+    margin:0 auto;
+    bottom: 1px;
+    position: absolute;
+  }
 

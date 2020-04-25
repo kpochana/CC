@@ -1,8 +1,20 @@
-.ion-margin-start {
-    --padding-top: 20px;
-}
-
-.ion-item-for-post {
-    --padding-top: 0.25cm;
-}
-
+.create-post-title {
+    
+  }
+  
+  .ion-margin-start {
+    padding-top: 20px;
+  }
+  
+  .ion-item-for-post {
+    padding-top: 0.5cm;
+    font-weight: bold;
+  }
+  
+  .add-post-button {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    margin:0 auto;
+    bottom: 1px;
+    position: absolute;
+  }

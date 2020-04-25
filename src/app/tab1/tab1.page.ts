@@ -9,6 +9,8 @@ import { NavController } from '@ionic/angular';
 })
 export class Tab1Page {
 
+  mSub;
+  mSub2;
   posts:string[][] = [];
 
   constructor(private reddit: RedditService,
@@ -16,7 +18,8 @@ export class Tab1Page {
 
   ngOnInit(){
     this.reddit.getPosts();
-    this.reddit.pageStream.subscribe((posts)=>{
+    this.reddit.getInbox();
+    this.mSub = this.reddit.pageStream.subscribe((posts)=>{
       this.posts = posts;
       console.log(posts);
     });
@@ -24,13 +27,24 @@ export class Tab1Page {
 
   ngOnDestroy(){
     console.log("I am running");
-    this.reddit.pageStream.unsubscribe();
+    this.mSub.unsubscribe();
+    this.mSub2.unsubscribe();
   }
 
   goToPost(post:string[]){
     //console.log(post[2]);
-    this.navCtrl.navigateForward('/post/'+post[2]);
+    this.reddit.postStream.next([]);
+    this.navCtrl.navigateForward('/post/'+post[4]);
   }
-  
+ 
+  refresh(event:any){
+    this.reddit.getPosts();
+    this.mSub2 = this.reddit.refreshStream.subscribe((refreshing)=>{
+      if(!refreshing){
+        event.target.complete();
+        this.reddit.refreshStream.next(true);
+      }
+    });
+  }
 
 }

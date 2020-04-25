@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/main/tabs"></ion-back-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title class="profile-title">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,23 +11,28 @@
   <ion-avatar class="mAvatar">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG">
   </ion-avatar>
-  <ion-card-title class="ion-text-center">{{name}}</ion-card-title>  
+  <ion-card-title class="ion-text-center">{{this.reddit.userName}}</ion-card-title>  
   
-  <ion-item>
-    <ion-label>Select City to Track</ion-label>
-    <ion-select value="Baton Rouge" okText="Okay" cancelText="Dismiss">
-      <ion-select-option value="brown">Baton Rouge</ion-select-option>
-      <ion-select-option value="blonde">Shreveport</ion-select-option>
-      <ion-select-option value="black">New Orleans</ion-select-option>
-      <ion-select-option value="red">Hammond</ion-select-option>
+  <ion-label style="text-align: center;">My City: </ion-label>
+  <ion-item class="trackcity">
+    <ion-label>{{this.reddit.locationString}}</ion-label>
+    <ion-select  (ionChange)="updateCity($event)" okText="Select" cancelText="Dismiss">
+      <ion-select-option *ngFor="let flair of this.reddit.flairList" [value]="flair">{{flair[0]}}</ion-select-option>
     </ion-select>
   </ion-item>
+
+
+  
+  <ion-card-subtitle class="ion-margin-start ">
+    <p style="text-align: center;">
+      Found any errors? Have any requests?<br>
+      Please email us at kuladevelopers@gmail.com
+    </p>
+  </ion-card-subtitle>
+
+  <ion-button (click)="logout()" class="logout_button" expand="block" size="medium" color="primary">
+    Logout
+  </ion-button>
+
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-button slot="primary">
-      <ion-icon slot="ion-oinly" name="alert">Contact Us</ion-icon>
-    </ion-button>
-  </ion-toolbar>
-</ion-footer>

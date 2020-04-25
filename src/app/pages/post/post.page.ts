@@ -11,48 +11,61 @@ import {PopoverMenuComponent} from '../../components/popover-menu/popover-menu.c
 })
 export class PostPage implements OnInit {
 
+  mSub;
+  saved:boolean;
   userText:string="";
   postID:string="";
   post:string[]=[];
 
   constructor(private route: ActivatedRoute,
               private reddit: RedditService,
-              public popoverController: PopoverController) { }
+              private popoverController: PopoverController) { }
 
   ngOnInit() {
     this.postID = this.route.snapshot.paramMap.get('id');
     console.log(this.postID);
     this.reddit.getPost(this.postID);
-    this.reddit.postStream.subscribe((post)=>{
+    this.mSub = this.reddit.postStream.subscribe((post)=>{
       this.post = post;
+      this.saved = this.reddit.savedPosts.includes(this.postID);
     });
-    var popButton = document.querySelector("#popButton");
-    popButton.addEventListener('click', this.showMenu);
   }
 
-  ionViewWillLeave(){
-    this.reddit.postStream.next([]);
+  ngOnDestroy(){
+    this.mSub.unsubscribe();
+  }
+
+  ionViewWillLeave(){ 
+    
   }
 
   submitComment(){
     if(this.userText != ""){
-      this.reddit.submitComment(this.postID, this.userText);
+      this.reddit.submitComment(this.postID, this.userText).then(()=>{
+        setTimeout(()=>{
+          console.log("resolving");
+        this.reddit.getPost(this.postID);
+        }, 2000);
+      });
       this.userText="";
     }
   }
 
-  async showMenu(event: any){
-    console.log(this.popoverController);
-    const popover = await this.popoverController.create({
-      component: PopoverMenuComponent,
-      event: event,
-      translucent: true,
-      backdropDismiss: true
-    });
-    return await popover.present();
+  saveToggle(){
+    if(!this.saved){
+      this.reddit.savePost(this.postID);
+      console.log("saving post");
+      this.saved = true;
+    }
+    else if(this.saved){
+      this.reddit.unsavePost(this.postID);
+      console.log("unsaving post");
+      this.saved = false;
+    }
   }
 
-  rf(){
-    console.log("i work");
+  message(){
+    console.log("button press");
+    this.reddit.goToThread(this.post[3]);
   }
 }

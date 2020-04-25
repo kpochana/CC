@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {RedditService} from '../services/reddit.service';
+import { NavController } from '@ionic/angular';
+import { interval } from 'rxjs';
+
 
 @Component({
   selector: 'app-tab2',
@@ -8,15 +11,39 @@ import {RedditService} from '../services/reddit.service';
 })
 export class Tab2Page {
 
+  mSub;
+  polling;
   threads:string[]=[];
-  constructor(private reddit:RedditService) {}
+  constructor(private reddit:RedditService,
+              private navCtrl:NavController) {}
 
   ngOnInit(){
-    this.reddit.messageStream.subscribe((threads)=>{
+    this.reddit.getInbox();
+    this.mSub = this.reddit.messageStream.subscribe((threads)=>{
       console.log(threads);
       this.threads = threads;
-    })
-    this.reddit.getInbox();
+    });
+  }
+
+  ngOnDestroy(){
+    this.mSub.unsubscribe();
+  }
+
+  goTo(name:string){
+    this.navCtrl.navigateForward("/messages/" + name);
+  }
+
+  ionViewDidEnter(){
+    this.polling = interval(30000).subscribe(()=>{
+      console.log("I am running wee");
+      this.reddit.getPosts();
+      this.reddit.updateInbox();
+    });
+
+  }
+
+  ionViewWillLeave(){
+    this.polling.unsubscribe();
   }
 }
 

@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>messages</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{id}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row *ngFor="let message of messages">
+      <ion-col offset="3" size="9" *ngIf="message[3]" class="message sentMessage">
+        <b>{{message[2]}}</b><br>
+        <span>{{message[1]}}</span>
+        <!--<div class="time" text-right><br>{{message[0] | date: 'short'}}</div>-->
+      </ion-col>
+      <ion-col size="9" *ngIf="!(message[3])" class="message receivedMessage">
+        <b>{{message[2]}}</b><br>
+        <span>{{message[1]}}</span>
+        <!--<div class="time" text-right><br>{{message[0] | date: 'short'}}</div>-->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-textarea autoGrow="true" placeholder="Write a message..." [(ngModel)]="userText"></ion-textarea>
+    <ion-buttons slot="end">
+      <ion-button (click)="submit()">
+        <ion-icon slot="icon-only" name="send-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

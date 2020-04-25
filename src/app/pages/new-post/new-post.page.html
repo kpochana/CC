@@ -3,29 +3,33 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/main/tabs"></ion-back-button>
     </ion-buttons>
-    <ion-title>Create a Post</ion-title>
+    <ion-title class="create-post-title">Create a Post</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-card-subtitle class="ion-margin-start">
-    <p>Please enter the service you are requesting</p>
-    <p>Include any specific such as brands, quantities, etc.</p>
-    <p>Users will privately message you if they can deliver your requests</p>
-    <p>Payment and delivery methods are decided between users. We recommend no-touch methods such as Venmo or CashApp. 
-      Please sanitize all items and stay safe.
+    <p>1. Enter a short description of the service you are requesting under "Post Title"</p>
+    <p>2. Under "Post Text", include any specifics such as brands, quantities, etc.</p>
+    <p>3. Click "Create Post"</p>
+    <p>4. Users will privately message you if they can deliver your requests</p>
+    <p style="text-align: center; font-size: small;"> Note: Payment and delivery methods are decided between users. 
+      We recommend no-touch payment methods such as Venmo or CashApp. 
+      Please avoid physical contact when delivering, sanitize all items, and stay safe!
     </p>
   </ion-card-subtitle>
 
   <ion-item class="ion-item-for-post">
-    <ion-label position="stacked">Post Title</ion-label>
-    <ion-input type="text" [(ngModel)]="postTitle"></ion-input>
-    <ion-label position="stacked">Post Text:</ion-label>
-    <ion-textarea placeholder="Enter post text here..." autoGrow="true" [(ngModel)]="postText"></ion-textarea>
+    <ion-label position="stacked" style="font-size: larger">Zip Code:</ion-label>
+    <ion-input type="numbers" placeholder="zip"[(ngModel)]="zipCode"></ion-input>
+    <ion-label position="stacked" style="font-size: larger;">Post Title:</ion-label>
+    <ion-input placeholder="title" type="text" [(ngModel)]="postTitle"></ion-input>
+    <ion-label position="stacked" style="font-size: larger;">Post Text:</ion-label>
+    <ion-textarea placeholder="Enter post text..." autoGrow="true" [(ngModel)]="postText"></ion-textarea>
   </ion-item>
 
-  <ion-button (click)="submitPost()" expand="block" size="large">
+  <ion-button (click)="submitPost()" class="add-post-button" expand="block" size="large" color="primary">
     Create Post
   </ion-button>
 </ion-content>

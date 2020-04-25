@@ -13,6 +13,7 @@ import { NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
+  tempSub;
   state:string = "";
   code:string = "";
 
@@ -23,13 +24,20 @@ export class LoginPage implements OnInit {
               private navCtrl: NavController) { }
 
   ngOnInit() {
+    if(this.reddit.redditExists){
+      this.navCtrl.navigateForward('/main/tabs');
+    }
+  }
+
+  ngOnDestroy(){
+    this.tempSub.unsubscribe();
   }
 
   login(){
     //submitting request in new inappbrowser
     let browser = this.iab.create(this.reddit.generateURL(), '_blank');
     //handling reddit auth
-    browser.on("loadstop").subscribe(event => {
+    this.tempSub = browser.on("loadstart").subscribe(event => {
       //grabbing loaded URL
       var mUrl = event.url;
       //checking if the URL is the redirect URL
@@ -49,12 +57,12 @@ export class LoginPage implements OnInit {
             this.alertUser("Something went wrong :( Please try again");
           }
           else{
-            this.navCtrl.navigateForward('/tabs');
+            this.navCtrl.navigateForward('/main/tabs');
           }
           browser.close();
         }
       }
-    })
+    });
   }
 
   async alertUser(message:string){

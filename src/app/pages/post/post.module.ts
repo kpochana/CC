@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, PopoverController } from '@ionic/angular';
 
 import { PostPageRoutingModule } from './post-routing.module';
 
 import { PostPage } from './post.page';
+import { PopoverMenuComponent } from 'src/app/components/popover-menu/popover-menu.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PostPage } from './post.page';
     IonicModule,
     PostPageRoutingModule
   ],
-  declarations: [PostPage]
+  entryComponents: [PopoverMenuComponent],
+  declarations: [PostPage, PopoverMenuComponent]
 })
 export class PostPageModule {}

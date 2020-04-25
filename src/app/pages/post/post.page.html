@@ -5,8 +5,14 @@
     </ion-buttons>
     <ion-title>{{post[0]}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button id="popButton">
-        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      <ion-button *ngIf="!(saved)" (click)="saveToggle()">
+        <ion-icon slot="icon-only" name="bookmark-outline" ></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="saved" (click)="saveToggle()">
+        <ion-icon slot="icon-only" name="bookmark" ></ion-icon>
+      </ion-button>
+      <ion-button (click)="message()">
+        <ion-icon slot="icon-only" name="chatbubbles"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -2,6 +2,10 @@
   <ion-header collapse="condense">
   </ion-header>
 
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
     <ion-list>
       <ion-item lines="none" *ngFor="let post of posts">
         <ion-card button="true" (click)="goToPost(post)">

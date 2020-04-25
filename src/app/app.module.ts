@@ -15,6 +15,7 @@ import { Device } from '@ionic-native/device/ngx';
 import { NavController } from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {PopoverController} from '@ionic/angular';
+//import {PopoverMenuComponent} from './components/popover-menu/popover-menu.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,8 +27,7 @@ import {PopoverController} from '@ionic/angular';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     InAppBrowser,
     RedditService,
-    Device,
-    PopoverController
+    Device
   ],
   bootstrap: [AppComponent]
 })

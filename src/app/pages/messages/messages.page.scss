@@ -1,0 +1,22 @@
+.message{
+    padding: 10px;
+    border-radius:10px;
+    margin-bottom: 4px;
+    white-space: pre-wrap;
+}
+
+.sentMessage{
+    background: var(--ion-color-primary);
+    color: #fff;
+}
+
+.receivedMessage{
+    background: var(--ion-color-tertiary);
+    color: #fff;
+}
+
+.time{
+    color: #dfdfdf;
+    float: right;
+    font-size: small;
+}
