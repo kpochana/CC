@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color = "primary">
-    <ion-title size = "large" class="ion-text-center">Login</ion-title>
+    <!--<ion-title size = "large" class="ion-text-center">Login</ion-title>-->
   </ion-toolbar>
 
   <style>
@@ -11,7 +11,7 @@
 
 <ion-content>
 
-  <ion-item class="ion-text-center">
+  <!--<ion-item class="ion-text-center">
     <ion-label position = "floating">State</ion-label>
     <ion-input type = "text" id="state" [(ngModel)] = "state"></ion-input>
   </ion-item>
@@ -19,19 +19,25 @@
   <ion-item class="ion-text-center">
     <ion-label position = "floating">Code</ion-label>
     <ion-input type = "text" id="code" [(ngModel)] = "code"></ion-input>
-  </ion-item>
+  </ion-item>-->
 
-  <ion-fab horizontal = "center" vertical = "center" slot = "fixed">
-    <ion-fab-button (click) = "login()">
-      <ion-icon name = "enter-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-grid justify-content-center align-items-center class="login_button">
+      <ion-row>
+        <ion-col size="12">
+          <ion-button (click) = "login()" expand="block" size="large" color="primary">
+            <b>LOGIN VIA REDDIT</b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  
 
-  <ion-fab horizontal = "center" vertical = "bottom" slot = "fixed">
+  <!--<ion-fab horizontal = "center" vertical = "bottom" slot = "fixed">
     <ion-fab-button (click) = "pushUpdate()">
       <ion-icon name = "refresh-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab>-->
 
 </ion-content>
 

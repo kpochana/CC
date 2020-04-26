@@ -18,7 +18,6 @@ export class Tab1Page {
 
   ngOnInit(){
     this.reddit.getPosts();
-    this.reddit.getInbox();
     this.mSub = this.reddit.pageStream.subscribe((posts)=>{
       this.posts = posts;
       console.log(posts);
@@ -39,6 +38,7 @@ export class Tab1Page {
  
   refresh(event:any){
     this.reddit.getPosts();
+    this.reddit.updateInbox();
     this.mSub2 = this.reddit.refreshStream.subscribe((refreshing)=>{
       if(!refreshing){
         event.target.complete();

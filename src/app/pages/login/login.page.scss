@@ -26,3 +26,12 @@
 .ion-text-center-state-code {
   --padding-top: 2cm;
 }
+
+.login_button{
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: row;
+  //vertical-align: middle;
+}

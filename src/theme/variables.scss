@@ -17,8 +17,12 @@ ion-card-title{
   --color: #ffffff;
 }
 
-ion-card-content{
+ion-card-subtitle{
   --color: #ffffff;
+}
+
+ion-card-content{
+  --color: #ffffff !important;
 }
 
 ion-item{

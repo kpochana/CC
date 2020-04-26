@@ -18,7 +18,7 @@ export class Tab2Page {
               private navCtrl:NavController) {}
 
   ngOnInit(){
-    this.reddit.getInbox();
+    //this.reddit.getInbox();
     this.mSub = this.reddit.messageStream.subscribe((threads)=>{
       console.log(threads);
       this.threads = threads;
@@ -34,7 +34,7 @@ export class Tab2Page {
   }
 
   ionViewDidEnter(){
-    this.polling = interval(30000).subscribe(()=>{
+    this.polling = interval(5000).subscribe(()=>{
       console.log("I am running wee");
       this.reddit.getPosts();
       this.reddit.updateInbox();

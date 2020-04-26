@@ -16,6 +16,7 @@ export class PostPage implements OnInit {
   userText:string="";
   postID:string="";
   post:string[]=[];
+  comments:string[][]=[];
 
   constructor(private route: ActivatedRoute,
               private reddit: RedditService,
@@ -28,6 +29,7 @@ export class PostPage implements OnInit {
     this.mSub = this.reddit.postStream.subscribe((post)=>{
       console.log("being updated");
       this.post = post;
+      this.comments = post[2];
       this.saved = this.reddit.savedPosts.includes(this.postID);
     });
   }
@@ -42,12 +44,31 @@ export class PostPage implements OnInit {
 
   submitComment(){
     if(this.userText != ""){
-      this.reddit.submitComment(this.postID, this.userText).then((a)=>{
-        console.log(a);
-        setTimeout(()=>{
-          console.log("resolving");
-        this.reddit.getPost(this.postID);
-        }, 2000);
+      this.reddit.submitComment(this.postID, this.userText).then((newComment)=>{
+        console.log(newComment);
+        let toInsert:string[] = [newComment.body, newComment.author.name, newComment.id, newComment.created_utc, 0];
+        this.comments.push(toInsert);
+      });
+      this.userText="";
+    }
+  }
+
+  locateComment(comment){
+    for(let index in this.comments){
+      let iter = this.comments[index][2];
+      if(iter == comment[2]){
+        return parseInt(index);
+      }
+    }
+  }
+
+  replyComment(comment:string[]){
+    if(this.userText != ""){
+      this.reddit.replyComment(comment[2], this.userText).then((newComment)=>{
+        console.log(newComment);
+        let toInsert = [newComment.body, newComment.author.name, newComment.id, newComment.created_utc, comment[4]+1];
+        let index = this.locateComment(comment) + 1;
+        this.comments.splice(index,0,toInsert);
       });
       this.userText="";
     }
@@ -66,8 +87,8 @@ export class PostPage implements OnInit {
     }
   }
 
-  message(){
+  message(dest = this.post[3]){
     console.log("button press");
-    this.reddit.goToThread(this.post[3]);
+    this.reddit.goToThread(dest);
   }
 }

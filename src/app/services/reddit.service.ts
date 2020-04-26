@@ -4,7 +4,7 @@ import { Device } from '@ionic-native/device/ngx';
 //import {Snoowrap} from 'snoowrap';
 import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ngx';
 import { Plugins } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 
 const { Storage } = Plugins;
 
@@ -58,7 +58,8 @@ export class RedditService {
   flairList:string[][] = [];
 
   constructor(private device: Device,
-              private navCtrl: NavController) { 
+              private navCtrl: NavController,
+              private toastController: ToastController) { 
     this.wrapUpdate.subscribe((swrap) =>{
       this.reddit = swrap;
       if(this.reddit != null){
@@ -74,7 +75,12 @@ export class RedditService {
     this.locationCode = lCode;
     if(lCode != "All Cities"){
       console.log("updating flair");
-      this.reddit.getSubreddit(this.subredditName).selectMyFlair({flair_template_id: lCode});
+      try{
+        this.reddit.getSubreddit(this.subredditName).selectMyFlair({flair_template_id: lCode});
+      }
+      catch{
+        this.displayToast("Something went wrong :(");
+      }
     }
     this.getPosts();
     this.storeData("locationString", lString);
@@ -126,19 +132,24 @@ export class RedditService {
       //console.log("uh oh" + this.state + " but i got: " + state);
       return false;
     }
-    snoowrap.fromAuthCode({
-      code: code,
-      userAgent: "corona condom",
-      clientId: this.appID,
-      redirectUri: this.redirectURL
-    }).then(r=>{
-      this.wrapUpdate.next(r);
-      Storage.set({
-        key:'refreshToken',
-        value:r.refresh_token
+    try{
+      snoowrap.fromAuthCode({
+        code: code,
+        userAgent: "corona condom",
+        clientId: this.appID,
+        redirectUri: this.redirectURL
+      }).then(r=>{
+        this.wrapUpdate.next(r);
+        Storage.set({
+          key:'refreshToken',
+          value:r.refresh_token
+        });
+        console.log(r.refresh_token);
       });
-      console.log(r.refresh_token);
-    });
+    }
+    catch{
+      this.displayToast("Something went wrong :(");
+    }
     return true;
   }
 
@@ -152,21 +163,27 @@ export class RedditService {
       //only get posts once it has been created
       if(this.reddit != null){
         //get posts
-        this.reddit.getSubreddit(subreddit).getNew().then((data)=>{
-          console.log(data.length);
-          let toPush:Array<Array<string>> = [];
-          for(let post of data){
-            console.log(post.author_flair_text + " " + this.locationString);
-            if(post.author_flair_text == this.locationString || this.locationString == "All Cities"){
-              toPush.push([post.title, post.selftext, post.author.name, post.created_utc, post.id]);
-              console.log(post);
-              console.log(post.comments);
+        try{
+          this.reddit.getSubreddit(subreddit).getNew().then((data)=>{
+            console.log(data.length);
+            let toPush:Array<Array<string>> = [];
+            for(let post of data){
+              console.log(post.author_flair_text + " " + this.locationString);
+              if(post.author_flair_text == this.locationString || this.locationString == "All Cities"){
+                toPush.push([post.title, post.selftext, post.author.name, post.created_utc, post.id]);
+                console.log(post);
+                console.log(post.comments);
+              }
             }
-          }
-          this.pageStream.next(toPush);
-          this.refreshStream.next(false);
-          tempSub.unsubscribe();
-        });
+            this.pageStream.next(toPush);
+            this.refreshStream.next(false);
+            tempSub.unsubscribe();
+          });
+        }
+        catch{
+          this.displayToast("Something went wrong :(");
+        }
+
       }
     
     });
@@ -180,6 +197,7 @@ export class RedditService {
     let postSub = this.wrapUpdate.subscribe((junk)=>{
       //only get posts once obj has been created
       if(this.reddit != null){
+        try{
           let post = this.reddit.getSubmission(postID);
           let toPush = []
           post.title.then((mTitle)=>{
@@ -187,11 +205,12 @@ export class RedditService {
             post.selftext.then((mText)=>{
               toPush.push(mText);
               post.comments.then((mComments)=>{
-                let commentsArray = [];
-                for(let comment of mComments){
+                let commentsArray = this.getComments(mComments, 0);
+                /*for(let comment of mComments){
                   //console.log(comment);
-                  commentsArray.push([comment.body, comment.author.name, comment.id]);
-                }
+                  commentsArray.push([comment.body, comment.author.name, comment.id, comment.created_utc]);
+                }*/
+                console.log(commentsArray);
                 toPush.push(commentsArray);
                 post.author.name.then((name)=>{
                   toPush.push(name);
@@ -205,25 +224,43 @@ export class RedditService {
               });
             });
           });
-              
+        }
+        catch{
+          this.displayToast("Something went wrong :(");
+        }      
       }
     });
   }
 
-  getComments(comments/*:Snoowrap.Listing<Snoowrap.Comment>*/){
-    let toReturn = [];
+  getComments(comments, depth){
+    let toReturn:string[][] = [];
     if(comments.length == 0){
-      return toReturn;
+      return [];
     }
     for(let comment of comments){
-      let toSend = [comment.body, comment.id];
-      toReturn.push([toSend, this.getComments(comment.replies)]);
+      toReturn.push([comment.body, comment.author.name, comment.id, comment.created_utc, depth]);
+      toReturn = toReturn.concat(this.getComments(comment.replies, depth + 1));
     }
     return toReturn;
+
   }
 
   submitComment(ID:string, text:string){
-    return this.reddit.getSubmission(ID).reply(text);
+    try{
+      return this.reddit.getSubmission(ID).reply(text);
+    }
+    catch{
+      this.displayToast("Something went wrong :(");
+    }
+  }
+
+  replyComment(ID:string, text:string){
+    try{
+      return this.reddit.getComment(ID).reply(text);
+    }
+    catch{
+      this.displayToast("Something went wrong :(");
+    }
   }
 
   loadProfile(accountID:string="me"){
@@ -232,39 +269,55 @@ export class RedditService {
     let tempSub = this.wrapUpdate.subscribe((junk)=>{
       if(this.reddit != null){
         //getting user flair options
-        this.reddit.getSubreddit(this.subredditName).getUserFlairTemplates().then((flairs)=>{
-          for(let flair of flairs){
-            this.flairList.push([flair.flair_text, flair.flair_template_id]);
-          }
-        });
+        try{
+          this.reddit.getSubreddit(this.subredditName).getUserFlairTemplates().then((flairs)=>{
+            for(let flair of flairs){
+              this.flairList.push([flair.flair_text, flair.flair_template_id]);
+            }
+          });
+        }
+        catch{
+          this.displayToast("Something went wrong :(");
+        }
         console.log("User Flair options: ");
         console.log(this.flairList);
         //loading profile information
         if(accountID == "me"){
-          this.reddit.getMe().name.then((name)=>{
-            console.log("pushing updated name: " + name);
-            this.userName = name; 
-            tempSub.unsubscribe();
-          });
+          try{
+            this.reddit.getMe().name.then((name)=>{
+              console.log("pushing updated name: " + name);
+              this.userName = name; 
+              tempSub.unsubscribe();
+            });
+          }
+          catch{
+            this.displayToast("Something went wrong :(");
+          }
         }
       }
     });
   }
 
   submitPost(title:string, body:string){
-    this.reddit.submitSelfpost({
-      subredditName: this.subredditName,
-      title: title,
-      text: body
-    }).then((post)=>{ 
-      this.getPosts();
-      console.log(post);
-    });
+    try{
+      this.reddit.submitSelfpost({
+        subredditName: this.subredditName,
+        title: title,
+        text: body
+      }).then((post)=>{ 
+        this.getPosts();
+        console.log(post);
+      });
+    }
+    catch{
+      this.displayToast("Something went wrong :(");
+    }
   }
 
   getInbox(){
     let tempSub = this.wrapUpdate.subscribe((junk)=>{
       if(this.reddit != null){
+        try{
         this.reddit.getInbox().then((messages)=>{
           this.processMessages(messages);
         });
@@ -272,6 +325,10 @@ export class RedditService {
           this.processMessages(messages, true);
           tempSub.unsubscribe();
         });
+        }
+        catch{
+          this.displayToast("Something went wrong :(");
+        }
         console.log(this.threads);
       }
     });
@@ -335,6 +392,7 @@ export class RedditService {
   submitMessage(dest:string, message:string){
     let tempSub = this.wrapUpdate.subscribe((junk)=>{
       if(this.reddit != null){
+        try{
         if(this.threads[dest].lastMessage == null){
           this.reddit.composeMessage({to: dest,
                                       subject: this.subredditName,
@@ -353,11 +411,16 @@ export class RedditService {
         });
         }
       }
+      catch{
+        this.displayToast("Something went wrong :(");
+      }
+      }
     });
   }
 
   updateInbox(original=false){
     if(this.reddit != null){
+      try{
       if(original){
         this.reddit.getSentMessages().then((messages)=>{
           this.processMessages([messages[0]], original);
@@ -378,6 +441,10 @@ export class RedditService {
         }
       }
       console.log(this.threads);
+      }
+      catch{
+        this.displayToast("Something went wrong :(");
+      }
     }
   }
 
@@ -391,6 +458,7 @@ export class RedditService {
         let displayList:string[][]=[];
         for(let id of this.savedPosts){
           let displayPost:string[]=[];
+          try{
           let post = this.reddit.getSubmission(id);
           post.title.then((title)=>{
             displayPost.push(title);
@@ -410,6 +478,10 @@ export class RedditService {
             });
           });
         }
+        catch{
+          this.displayToast("Something went wrong :(");
+        }
+        }
         this.savedStream.next(displayList);
       }
     });
@@ -422,6 +494,14 @@ export class RedditService {
       //this.getThread(key);
     }
     this.navCtrl.navigateForward("/messages/" + key);
+  }
+
+  async displayToast(message:string){
+    const mToast = await this.toastController.create({
+      message:message,
+      duration:2000
+    });
+    mToast.present();
   }
 }
 

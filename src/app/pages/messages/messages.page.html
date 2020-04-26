@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="toolbar">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/main/tabs"></ion-back-button>
     </ion-buttons>
@@ -25,7 +25,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar class="toolbar">
     <ion-textarea autoGrow="true" placeholder="Write a message..." [(ngModel)]="userText"></ion-textarea>
     <ion-buttons slot="end">
       <ion-button (click)="submit()">

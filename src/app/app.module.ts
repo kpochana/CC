@@ -12,10 +12,8 @@ import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser/ng
 import { RedditService } from './services/reddit.service';
 import { Device } from '@ionic-native/device/ngx';
 //import { Snoowrap } from 'snoowrap';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
-import {PopoverController} from '@ionic/angular';
-//import {PopoverMenuComponent} from './components/popover-menu/popover-menu.component';
 
 @NgModule({
   declarations: [AppComponent],

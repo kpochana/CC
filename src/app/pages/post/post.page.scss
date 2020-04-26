@@ -1,9 +1,10 @@
 ion-content ion-toolbar {
     --background: translucent;
+    --color: #3bc8ff;
   }
-.ion-toolbar {
+
+.toolbar_top {
     --background: #ffffff79;
-    --color: #3880ff;
     --min-height: 56px;
     --opacity: 1;
     --padding-bottom: 4px;
@@ -11,3 +12,31 @@ ion-content ion-toolbar {
     --padding-start: 4px;
     --padding-top: 4px;
   }
+
+  .toolbar{
+    --color: #3bc8ff;
+  }
+
+.comment_grid{
+  background: #555555;
+  //padding: 10px;
+  border-radius:10px;
+  margin-bottom: 4px;
+  white-space: pre-wrap;
+}
+
+.post{
+  background: #555555;
+  padding: 10px;
+  border-radius:10px;
+  margin-bottom: 4px;
+  white-space: pre-wrap;
+}
+
+.comment_title{
+  color:#ffffff;
+}
+
+.white{
+  color:#ffffff;
+}

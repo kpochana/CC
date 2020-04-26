@@ -27,6 +27,13 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.reddit.loadData();
+      try{
+      this.reddit.getPosts();
+      this.reddit.getInbox();
+      }
+      catch(err){
+        console.log("something went wrong");
+      }
       this.splashScreen.hide();
     });
   }
